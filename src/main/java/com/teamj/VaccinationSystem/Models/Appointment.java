@@ -5,14 +5,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Entity
 public class Appointment {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private long id;
     private long patientID;
     private String facilityName;
     private String facilityLocation;
@@ -21,6 +20,34 @@ public class Appointment {
     private LocalDateTime dateTime;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Vaccine> vaccines;
+
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "id=" + id +
+                ", patientID=" + patientID +
+                ", facilityName='" + facilityName + '\'' +
+                ", facilityLocation='" + facilityLocation + '\'' +
+                ", dateTime=" + dateTime +
+                ", vaccines=" + vaccines +
+                '}';
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getPatientID() {
+        return patientID;
+    }
+
+    public void setPatientID(long patientID) {
+        this.patientID = patientID;
+    }
 
     public String getFacilityName() {
         return facilityName;
@@ -46,47 +73,11 @@ public class Appointment {
         this.dateTime = dateTime;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public long getPatientID() {
-        return patientID;
-    }
-
-    public void setPatientID(long patientID) {
-        this.patientID = patientID;
-    }
-
     public List<Vaccine> getVaccines() {
         return vaccines;
     }
 
     public void setVaccines(List<Vaccine> vaccines) {
         this.vaccines = vaccines;
-    }
-
-    public LocalDateTime getTime() {
-        return dateTime;
-    }
-
-    public void setTime(LocalDateTime time) {
-        this.dateTime = time;
-    }
-
-    @Override
-    public String toString() {
-        return "Appointment{" +
-                "id=" + id +
-                ", patientID=" + patientID +
-                ", facilityName='" + facilityName + '\'' +
-                ", facilityLocation='" + facilityLocation + '\'' +
-                ", dateTime=" + dateTime +
-                ", vaccines=" + vaccines +
-                '}';
     }
 }

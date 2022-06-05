@@ -1,6 +1,7 @@
 package com.teamj.VaccinationSystem.Controllers;
 
 import com.teamj.VaccinationSystem.Models.Appointment;
+import com.teamj.VaccinationSystem.Models.Rescheduled;
 import com.teamj.VaccinationSystem.Services.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ public class AppointmentController {
     private final AppointmentService service;
 
     @Autowired
-    public AppointmentController(AppointmentService service) {
+    AppointmentController(AppointmentService service) {
         this.service = service;
     }
 
@@ -40,9 +41,9 @@ public class AppointmentController {
     }
 
     @PostMapping("/api/v1/reschedule-appointment")
-    public Appointment rescheduledAppointment(@RequestBody Long patientID,
-                                              @RequestBody LocalDateTime dateTime) {
-        return this.service.rescheduleAppointment(patientID, dateTime);
+    public Appointment rescheduledAppointment(@RequestBody Rescheduled object) {
+        return this.service.rescheduleAppointment(object.getAppointmentID(),
+                object.getNewDateTime());
     }
 
 }

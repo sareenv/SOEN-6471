@@ -11,24 +11,22 @@ import java.util.List;
 
 @Service
 public class AppointmentService implements AppointmentServiceInterface {
-
-    private final AppointmentRepository appointmentRepository;
-
+    private final AppointmentRepository repository;
     @Autowired
-    AppointmentService(AppointmentRepository repository) {
-        this.appointmentRepository = repository;
+    public AppointmentService(AppointmentRepository repository) {
+        this.repository = repository;
     }
 
 
     @Override
     public Appointment bookAppointment(Appointment appointmentDetails) {
-        return this.appointmentRepository.save(appointmentDetails);
+        return this.repository.save(appointmentDetails);
     }
 
     @Override
     public boolean cancelAppointment(Long appointmentID) {
         try {
-            this.appointmentRepository.deleteById(appointmentID);
+            this.repository.deleteById(appointmentID);
             return false;
         } catch (Exception exception) {
             return true;
@@ -39,22 +37,22 @@ public class AppointmentService implements AppointmentServiceInterface {
     @Override
     public Appointment rescheduleAppointment(Long appointmentID, LocalDateTime newDateTime) {
         Appointment appointment =
-                this.appointmentRepository.findById(appointmentID).get();
+                this.repository.findById(appointmentID).get();
         appointment.setDateTime(newDateTime);
-        this.appointmentRepository.deleteById(appointmentID);
-        return this.appointmentRepository.save(appointment);
+        this.repository.deleteById(appointmentID);
+        return this.repository.save(appointment);
     }
 
     @Override
     public List<Appointment> fetchAppointmentByPatientID(long patientID) {
-        return this.appointmentRepository.findAllByPatPatientID(patientID);
+        return this.repository.findAllByPatientID(patientID);
     }
 
     @Override
     public List<Appointment> fetchAppointmentBefore(LocalDateTime dateTime) {
         LocalDateTime pastAppointments = LocalDateTime.now();
         List<Appointment> appointments =
-                this.appointmentRepository.findAllByDateTimeBefore(pastAppointments);
+                this.repository.findAllByDateTimeBefore(pastAppointments);
         return appointments;
     }
 }

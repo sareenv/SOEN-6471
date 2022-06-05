@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface AppointmentRepository extends CrudRepository<Appointment, Long> {
     public List<Appointment> findAllByDateTimeBefore(LocalDateTime dateTime);
-    public List<Appointment> findAllByFacilityName(String facilityName);
-    public List<Appointment> findAllByPatPatientID(Long patientID);
+//    public List<Appointment> findAllByFacilityName(String facilityName);
+//    public List<Appointment> findAllByPatPatientID(Long patientID);
+    public List<Appointment> findAllByPatientID(long patientID);
 }

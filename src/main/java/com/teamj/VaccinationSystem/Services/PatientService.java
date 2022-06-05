@@ -6,6 +6,8 @@ import com.teamj.VaccinationSystem.Models.Patient;
 import com.teamj.VaccinationSystem.Repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,8 +43,11 @@ public class PatientService implements PatientServiceInterface {
 
     @Override
     public List<Patient> fetchAllPatient() {
-        List<Patient> patients = repository.findAll();
-        for(Patient p: patients) {p.setPassword("");}
+        List<Patient> patients = new ArrayList<>();
+        for(Patient patient: repository.findAll()) {
+            patient.setPassword("");
+            patients.add(patient);
+        }
         return patients;
     }
 

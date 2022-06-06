@@ -45,5 +45,4 @@ public class AppointmentController {
         return this.service.rescheduleAppointment(object.getAppointmentID(),
                 object.getNewDateTime());
     }
-
 }
